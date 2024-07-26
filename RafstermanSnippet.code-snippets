@@ -478,12 +478,181 @@
 	//********************************************************************************************************************************************************************
 	//********************************************************************************************************************************************************************
 
-	"Rafstermanjavascriptinit":{
-		"prefix": "javascriptinit",
+	"Rafstermanjavascriptinitapp":{
+		"prefix": "javascriptinitapp",
 		"body": [
 			"// @The-Master",
 			"",
-			"System.out.println(\"${1:hola}\");",
+			"require('dotenv').config(); //Creo que ni se usa aqui xd",
+			"",
+			"const Server=require('./models/server');",
+			"",
+			"const server = new Server();",
+			"",
+			"server.listen();"
+		],
+		"description": "Inicializa la app que se encuentra en la carpeta raiz",
+		"scope": "javascript"
+	},
+
+	"Rafstermanjavascriptinitserver":{
+		"prefix": "javascriptinitserver",
+		"body": [
+			"// @The-Master",
+			"",
+			"//configuraciones del servidor",
+			"",
+			"let express = require(\"express\");",
+			"let Sha1=require('sha1');",
+			"let session=require('express-session');",
+			"let cookieParser=require('cookie-parser');",
+			"let Conexion=require(\"./conexion\");",
+			"let conexion=new Conexion();",
+			"",
+			"require('dotenv').config();",
+			"",
+			"",
+			"class Server{    //Inicia La Clase Server",
+			"        constructor(){",
+			"        this.app=express();",
+			"        this.port=process.env.PORT;",
+			"        this.middlewares();",
+			"        this.routes();",
+			"    }",
+			"",
+			"    middlewares(){",
+			"        this.app.use(express.static('public'));",
+			"        this.app.set('view engine', 'ejs');",
+			"        this.app.use(express.static(__dirname + '/public'));",
+			"        this.app.use(cookieParser());",
+			"        this.app.use(session({",
+			"            secret:\"amarte\",",
+			"            saveUninitialized:true,",
+			"            resave:true",
+			"        }));",
+			"    }",
+			"",
+			"    routes(){",
+			"        this.app.get('',(req,res)=>{    // Inicia La Ruta Ejemplo1",
+			"            res.render('');",
+			"        });    // Termina La Ruta Ejemplo1",
+			"",
+			"        this.app.get('',(req,res)=>{    // Inicia La Ruta Ejemplo2",
+			"            if(req.session.user){",
+			"                res.render('');",
+			"            }else{res.render('');}",
+			"        });    // Termina La Ruta Ejemplo2",
+			"",
+			"        this.app.get('',(req,res)=>{    // Inicia La Ruta Ejemplo3",
+			"            if(req.session.user){",
+			"                let x;",
+			"                let pass=req.session.user.psw;",
+			"                let usr=req.session.user.usr;",
+			"                pass=Sha1(pass);",
+			"                usr=Sha1(usr);",
+			"                let conn=conexion.conexio();    // Abre Conexion NO OLVIDAR CERRAR LA CONEXION!!!",
+			"",
+			"                if(x!=null){",
+			"                    let user={",
+			"                        ide:x.ide,",
+			"                        usr:x.usr,",
+			"                        psw:x.psw",
+			"                    };",
+			"                    req.session.user=user;",
+			"                    req.session.save();",
+			"                    res.render('');",
+			"                }else{res.redirect();}",
+			"            }else{res.render('');}",
+			"        });    // Termina La Ruta Ejemplo3",
+			"",
+			"        this.app.get('/login',(req,res)=>{// Inicia La Ruta login",
+			"           let usuar=req.query.username;",
+			"           let passw=req.query.password;",
+			"",
+			"           if(usuar!=null && passw!=null){",
+			"               let user={",
+			"                   usr:usuar,",
+			"                   psw:passw",
+			"               };",
+			"",
+			"               req.session.user=user;",
+			"               req.session.save();",
+			"               res.redirect('/perfil');",
+			"           }else{res.render('login');}",
+			"        });    //Termina La Ruta login",
+			"    }    // Termina El Metodo routes",
+			"",
+			"    listen(){",
+			"        this.app.listen(this.port,()=>{",
+			"            console.log(\"https://127.0.0.1:\"+this.port);",
+			"        });",
+			"    }    // Termina El Metodo listen",
+			"}    // Termina La Clase Server",
+			"module.expoers=Server;"
+],
+		"description": "Inicia La Configuracion Del Archivo Server",
+		"scope": "javascript"
+	},
+
+	"Rafstermanjavascriptmongocreate":{
+		"prefix": "javascriptmongocreate",
+		"body": [
+			"let conn=conexion.conexion();",
+			"try{",
+			"    await conn.connect();",
+			"    await conn.db().collection().insertOne({\"clave\":valor})",
+			"}finally{",
+			"    await conn.close();",
+			"}",
+		],
+		"description": "",
+		"scope": "javascript"
+	},
+
+	"Rafstermanjavascriptmongoread":{
+		"prefix": "javascriptmongoread",
+		"body": [
+			"let conn=conexion.conexion();",
+			"let x;",
+			"try{",
+			"    await conn.connect();",
+			"    let read=await conn.db().collection().findOne({\"clave\":valor},{\"clave\":valor})",
+			"    x=read;",
+			"}finally{",
+			"    await conn.close();",
+			"}",
+		],
+		"description": "",
+		"scope": "javascript"
+	},
+
+	"Rafstermanjavascriptmongoupdate":{
+		"prefix": "javascriptmongoupdate",
+		"body": [
+			"let conn=conexion.conexion();",
+			"try{",
+			"    let command={}",
+			"    await conn.connect();",
+			"    await conn.db().collection().updateOne(command,{\"$set\":{\"clave\":valor}});",
+			"}finally{",
+			"    await conn.close();",
+			"}",
+		],
+		"description": "",
+		"scope": "javascript"
+	},
+
+	"Rafstermanjavascriptmongodelete":{
+		"prefix": "javascriptmongodelete",
+		"body": [
+			"let conn=conexion.conexion();",
+			"try{",
+			"    let command={}",
+			"    await conn.connect();",
+			"    await conn.db().collection().deleteOne(command);",
+			"}finally{",
+			"    await conn.close();",
+			"}",
 		],
 		"description": "",
 		"scope": "javascript"
@@ -511,14 +680,30 @@
 		"scope": "javascript"
 	},
 
-	"Rafstermanjavascriptcrudmongodb":{
-		"prefix": "javascriptcrudmongodb",
+	"Rafstermanjavascriptinitconexionmongodb":{
+		"prefix": "javascriptinitconexionmongodb",
 		"body": [
 			"// @The-Master",
 			"",
+			"require('dotenv').config();",
+			"const { MongoClient, ServerApiVersion } = require('mongodb');",
+			"const uri =process.env.URI;",
 			"",
+			"class Conexion{",
+			"    conexion(){",
+			"        const client = new MongoClient(uri,{",
+			"            serverApi:{",
+			"                version: ServerApiVersion.v1,",
+			"                strict:true,",
+			"                deprecationErrors:true",
+			"            }",
+			"        });",
+			"        return client;",
+			"    }",
+			"}",
+			"module.export=Conexion;",
 		],
-		"description": "",
+		"description": "Crea La Configuracion Para Retornar La Conexion Entre Mongo Y JS",
 		"scope": "javascript"
 	},
 
@@ -611,3 +796,17 @@
 	},
 }
 
+//********************************************************************************************************************************************************************
+//********************************************************************************************************************************************************************
+//********************    ****    ****            ****        *******        ****    *********************************************************************************
+//********************    ****    ****            ****        *******        ****    *********************************************************************************
+//********************    ****    ********    ********    *    *****    *    ****    *********************************************************************************
+//********************    ****    ********    ********    *    *****    *    ****    *********************************************************************************
+//********************            ********    ********    **    ***    **    ****    *********************************************************************************
+//********************            ********    ********    **    ***    **    ****    *********************************************************************************
+//********************    ****    ********    ********    ***    *    ***    ****    *********************************************************************************
+//********************    ****    ********    ********    ***    *    ***    ****    *********************************************************************************
+//********************    ****    ********    ********    ****       ****    ****        *****************************************************************************
+//********************    ****    ********    ********    ****       ****    ****        *****************************************************************************
+//********************************************************************************************************************************************************************
+//********************************************************************************************************************************************************************
