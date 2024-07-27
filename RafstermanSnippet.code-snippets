@@ -720,6 +720,84 @@
 		"scope": "javascript"
 	},
 
+	"Rafstermanjavascriptmysqlcreate":{
+		"prefix": "javascriptmysqlcreate",
+		"body": [
+			"let conn=conexion.conexion();",
+			"conn=connect(function(err){",
+			"    if(err) throw err;",
+			"    else{",
+			"        let command=\"\";",
+			"        conn.query(command,function(err){",
+			"            if(err) throw err;",
+			"            else{",
+			"            }",
+			"        });",
+			"    }",
+			"});"
+		],
+		"description": "",
+		"scope": "javascript"
+	},
+
+	"Rafstermanjavascriptmysqlread":{
+		"prefix": "javascriptmysqlread",
+		"body": [
+			"let conn=conexion.conexion();",
+			"conn=connect(function(err){",
+			"    if(err) throw err;",
+			"    else{",
+			"        let command=\"\";",
+			"        conn.query(command,function(err,result){",
+			"            if(err) throw err;",
+			"        });",
+			"    }",
+			"});"
+		],
+		"description": "",
+		"scope": "javascript"
+	},
+
+	"Rafstermanjavascriptmysqlupdate":{
+		"prefix": "javascriptmysqlupdate",
+		"body": [
+			"let conn=conexion.conexion();",
+			"conn.connect(function(err){",
+			"    if(err) throw err;",
+			"    else{",
+			"        let command=\"'';\";",
+			"        conn.query(command,function(err){",
+			"            if(err) throw err;",
+			"            else{",
+			"            }",
+			"        })",
+			"    }",
+			"});",
+		],
+		"description": "",
+		"scope": "javascript"
+	},
+
+	"Rafstermanjavascriptmysqldelete":{
+		"prefix": "javascriptmysqldelete",
+		"body": [
+			"let conn=conexion.conexion();",
+			"conn.connect(function(err){",
+			"    if(err) throw err;",
+			"    else{",
+			"        let command=\"'';\";",
+			"        conn.query(command,function(err){",
+			"            if(err) throw err;",
+			"            else{",
+			"            }",
+			"        })",
+			"    }",
+			"});",
+		],
+		"description": "",
+		"scope": "javascript"
+	},
+
 	"Rafstermanjavascriptcrudsqlserver":{
 		"prefix": "javascriptcrudsqlserver",
 		"body": [
