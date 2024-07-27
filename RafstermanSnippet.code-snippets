@@ -658,28 +658,6 @@
 		"scope": "javascript"
 	},
 
-	"Rafstermanjavascriptcrudmysql":{
-		"prefix": "javascriptcrudmysql",
-		"body": [
-			"// @The-Master",
-			"",
-			"",
-		],
-		"description": "",
-		"scope": "javascript"
-	},
-
-	"Rafstermanjavascriptcrudsqlserver":{
-		"prefix": "javascriptcrudsqlserver",
-		"body": [
-			"// @The-Master",
-			"",
-			"",
-		],
-		"description": "",
-		"scope": "javascript"
-	},
-
 	"Rafstermanjavascriptinitconexionmongodb":{
 		"prefix": "javascriptinitconexionmongodb",
 		"body": [
@@ -706,7 +684,53 @@
 		"description": "Crea La Configuracion Para Retornar La Conexion Entre Mongo Y JS",
 		"scope": "javascript"
 	},
+	
+	"Rafstermanjavascriptinitconexionmysql":{
+		"prefix": "javascriptconexionmysql",
+		"body": [
+			"// @The-Master",
+			"",
+			"const mysql= require(\"mysql\");",
+			"",
+			"class Conexion{",
+			"    constructor(){",
+			"        this.dbdatabase=process.env.MYSQLDATABASE;",
+			"        this.dbhost=process.env.MYSQLHOST;",
+			"        this.dbpassword=process.env.MYSQLPASSWORD;",
+			"        this.dbport=process.env.MYSQLPORT;",
+			"        this.dbuser=process.env.MYSQLUSER;",
+			"        this.dburl=process.env.MYSQL_URL;",
+			"        this.result;",
+			"    }",
+			"",
+			"    conexion(){",
+        	"        let conn=mysql.createConnection({",
+            "            user:this.dbuser,",
+            "            password:this.dbpassword,",
+            "            database:this.dbdatabase,",
+            "            port:this.dbport,",
+            "            host:this.dbhost",
+			"        });",
+			"        return conn;",
+			"    }",
+			"}",
+			"module.exports=Conexion;"
+		],
+		"description": "",
+		"scope": "javascript"
+	},
 
+	"Rafstermanjavascriptcrudsqlserver":{
+		"prefix": "javascriptcrudsqlserver",
+		"body": [
+			"// @The-Master",
+			"",
+			"",
+		],
+		"description": "",
+		"scope": "javascript"
+	},
+	
 	"Rafstermanjavascriptcrudpersistence":{
 		"prefix": "javascriptcrudpersistence",
 		"body": [
